@@ -2,6 +2,7 @@ import { AmbientLight, DirectionalLight, PerspectiveCamera, Scene, WebGLRenderer
 import { Spaceship } from './spaceship'
 import { InputController } from './input.controller'
 import { StarField } from './starfield'
+import { CameraController } from './camera.controller'
 
 export class App {
   private readonly canvas = document.getElementById('canvas') as HTMLCanvasElement
@@ -11,6 +12,7 @@ export class App {
   private readonly renderer = new WebGLRenderer({ canvas: this.canvas, antialias: true })
   private readonly inputController = new InputController()
   private readonly spaceship = new Spaceship(this.scene, this.inputController, 0.2)
+  private readonly cameraController = new CameraController(this.camera, this.spaceship)
 
   constructor() {
     this.config()
@@ -34,6 +36,7 @@ export class App {
   animate() {
     this.renderer.render(this.scene, this.camera)
     this.spaceship.update()
+    this.cameraController.update()
     requestAnimationFrame(this.animate.bind(this))
   }
 

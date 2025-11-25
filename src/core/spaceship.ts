@@ -3,12 +3,12 @@ import { type GLTF, GLTFLoader } from 'three/examples/jsm/Addons.js'
 import { InputController } from './input.controller'
 
 export class Spaceship {
-  declare private model: Object3D
+  declare public model: Object3D
   private readonly scene: Scene
   private readonly inputController: InputController
   private readonly scale: number
-  private readonly speed: number = 0.1
-  private readonly rotationSpeed: number = 0.05
+  private readonly speed: number = 0.5
+  private readonly rotationSpeed: number = 0.01
   private readonly gltfLoader = new GLTFLoader()
 
   constructor(scene: Scene, inputController: InputController, scale: number) {
