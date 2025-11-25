@@ -1,6 +1,7 @@
 import { AmbientLight, DirectionalLight, PerspectiveCamera, Scene, WebGLRenderer } from 'three'
 import { Spaceship } from './spaceship'
 import { InputController } from './input.controller'
+import { StarField } from './starfield'
 
 export class App {
   private readonly canvas = document.getElementById('canvas') as HTMLCanvasElement
@@ -21,6 +22,7 @@ export class App {
 
   private createInstance() {
     this.spaceship.loadModel()
+    new StarField(this.scene)
   }
 
   config() {
