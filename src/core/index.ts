@@ -5,8 +5,8 @@ import { StarField } from './starfield'
 import { CameraController } from './camera.controller'
 
 export class App {
+  declare private static instance: App
   private readonly canvas = document.getElementById('canvas') as HTMLCanvasElement
-
   private readonly scene = new Scene()
   private readonly camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
   private readonly renderer = new WebGLRenderer({ canvas: this.canvas, antialias: true })
@@ -14,12 +14,21 @@ export class App {
   private readonly spaceship = new Spaceship(this.scene, this.inputController, 0.2)
   private readonly cameraController = new CameraController(this.camera, this.spaceship)
 
-  constructor() {
+  private constructor() {
     this.config()
     this.createLights()
     this.createInstance()
-
     this.animate()
+    window.addEventListener('resize', this.onWindowResize.bind(this))
+  }
+
+  public static start(): App {
+    if (!App.instance) {
+      console.log('App starting')
+
+      App.instance = new App()
+    }
+    return App.instance
   }
 
   private createInstance() {
@@ -47,5 +56,11 @@ export class App {
 
     const directionalLight = new DirectionalLight(0xffffff, 0.8)
     this.scene.add(directionalLight)
+  }
+
+  private onWindowResize(): void {
+    this.camera.aspect = window.innerWidth / window.innerHeight
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(window.innerWidth, window.innerHeight)
   }
 }
